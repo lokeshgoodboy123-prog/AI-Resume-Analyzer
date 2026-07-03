@@ -13,6 +13,7 @@ export interface IExtractedInfo {
 
 export interface IAiAnalysis {
   atsScore: number;
+  analysisSource?: "ai" | "local";
   missingKeywords: string[];
   strongSections: string[];
   weakSections: string[];
@@ -62,6 +63,7 @@ const extractedInfoSchema = new Schema<IExtractedInfo>(
 const aiAnalysisSchema = new Schema<IAiAnalysis>(
   {
     atsScore: { type: Number, default: 0 },
+    analysisSource: { type: String, enum: ["ai", "local"], default: "local" },
     missingKeywords: { type: [String], default: [] },
     strongSections: { type: [String], default: [] },
     weakSections: { type: [String], default: [] },

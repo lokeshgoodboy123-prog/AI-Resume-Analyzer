@@ -148,10 +148,12 @@ router.post(
       // Parse the resume file
       const parsed = await parseResume(filePath, safeMime);
 
-      // Run AI analysis
+      // Run AI analysis — passes full parsed structure so local fallback
+      // can produce content-driven, varied scores when OpenAI is unavailable
       const aiAnalysis = await analyzeResumeWithAI(
         parsed.text,
         jobDescription,
+        parsed,
       );
 
       // Save to database
