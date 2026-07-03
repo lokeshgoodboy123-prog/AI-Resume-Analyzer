@@ -1,5 +1,13 @@
 import { readFileSync } from "fs";
+import { createRequire } from "module";
 import { logger } from "./logger";
+
+// Use createRequire to load CJS pdf-parse without esbuild dynamic-import interop issues.
+// Import lib/pdf-parse.js directly to skip v1's self-test (which looks for test/data/*.pdf).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const pdfParse: (buf: Buffer) => Promise<{ text: string }> = createRequire(import.meta.url)(
+  "pdf-parse/lib/pdf-parse.js",
+);
 
 export interface ParsedResume {
   text: string;
@@ -24,10 +32,6 @@ export async function parseResume(
       mimetype === "application/pdf" ||
       filePath.toLowerCase().endsWith(".pdf")
     ) {
-      // Use lib/pdf-parse.js directly to skip pdf-parse v1's self-test runner
-      // which tries to open ./test/data/05-versions-space.pdf at module load time
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const pdfParse = (await import("pdf-parse/lib/pdf-parse.js")) as any;
       const buffer = readFileSync(filePath);
       const result = await pdfParse(buffer);
       text = result.text as string;
