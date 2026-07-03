@@ -1,13 +1,32 @@
 import { Router, type IRouter } from "express";
 import multer from "multer";
 import path from "path";
-import { mkdirSync, existsSync, unlinkSync } from "fs";
+import { mkdirSync, existsSync, unlinkSync, readFileSync } from "fs";
 import { requireAuth } from "../middlewares/auth";
 import { parseResume } from "../lib/resume-parser";
 import { analyzeResumeWithAI } from "../lib/openai-client";
 import { Resume } from "../models/resume";
 import { isDBConnected } from "../lib/mongodb";
 import { logger } from "../lib/logger";
+
+/**
+ * Validate file magic bytes to prevent spoofed MIME/extension attacks.
+ * PDF: %PDF- (25 50 44 46 2D)
+ * DOCX: ZIP PK signature (50 4B 03 04)
+ */
+function detectFileType(filePath: string): "pdf" | "docx" | "unknown" {
+  const buf = readFileSync(filePath, { flag: "r" });
+  const header = buf.slice(0, 8);
+  // PDF: starts with %PDF
+  if (header[0] === 0x25 && header[1] === 0x50 && header[2] === 0x44 && header[3] === 0x46) {
+    return "pdf";
+  }
+  // DOCX/ZIP: PK\x03\x04
+  if (header[0] === 0x50 && header[1] === 0x4b && header[2] === 0x03 && header[3] === 0x04) {
+    return "docx";
+  }
+  return "unknown";
+}
 
 /** Silently delete a file if it exists */
 function safeUnlink(filePath: string): void {
@@ -112,8 +131,22 @@ router.post(
 
     const filePath = req.file.path;
     try {
+      // Validate actual file content via magic bytes — MIME and extension are user-controlled
+      const detectedType = detectFileType(filePath);
+      if (detectedType === "unknown") {
+        safeUnlink(filePath);
+        res.status(400).json({ error: "Invalid file. Only genuine PDF and DOCX files are accepted." });
+        return;
+      }
+
+      // Use magic-byte-detected type as the authoritative MIME for parsing
+      const safeMime =
+        detectedType === "pdf"
+          ? "application/pdf"
+          : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
       // Parse the resume file
-      const parsed = await parseResume(filePath, req.file.mimetype);
+      const parsed = await parseResume(filePath, safeMime);
 
       // Run AI analysis
       const aiAnalysis = await analyzeResumeWithAI(
@@ -153,7 +186,12 @@ router.post(
       safeUnlink(filePath);
       logger.error({ err }, "Resume upload/analysis failed");
       const message = err instanceof Error ? err.message : "Analysis failed";
-      res.status(422).json({ error: message });
+      // 400 for client input errors (bad file content), 502 for upstream failures (AI/parser)
+      const isClientError =
+        message.includes("Unsupported file type") ||
+        message.includes("Invalid PDF") ||
+        message.includes("bad XRef");
+      res.status(isClientError ? 400 : 502).json({ error: message });
     }
   },
 );
