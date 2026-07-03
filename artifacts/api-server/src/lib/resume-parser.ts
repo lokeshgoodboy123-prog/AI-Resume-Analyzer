@@ -24,9 +24,10 @@ export async function parseResume(
       mimetype === "application/pdf" ||
       filePath.toLowerCase().endsWith(".pdf")
     ) {
-      // pdf-parse v1.x — CJS module, exports a function directly
+      // Use lib/pdf-parse.js directly to skip pdf-parse v1's self-test runner
+      // which tries to open ./test/data/05-versions-space.pdf at module load time
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const pdfParse = (await import("pdf-parse")).default as any;
+      const pdfParse = (await import("pdf-parse/lib/pdf-parse.js")) as any;
       const buffer = readFileSync(filePath);
       const result = await pdfParse(buffer);
       text = result.text as string;
