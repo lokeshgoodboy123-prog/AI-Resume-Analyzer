@@ -1,0 +1,1 @@
+- [AI Resume Analyzer stack](resume-analyzer-stack.md) — MERN stack app; MongoDB+Mongoose backend, React+Vite frontend, file upload via fetch+FormData to /api/resumes/upload (no generated hook).

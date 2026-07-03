@@ -1,0 +1,321 @@
+Build a complete, production-ready AI Resume Analyzer web application using the MERN Stack.
+
+The application should be fully functional, modern, responsive, scalable, and deployable on Replit with one click.
+
+==========================================================
+TECH STACK
+==========================================================
+
+Frontend:
+- React.js
+- React Router DOM
+- Tailwind CSS
+- Axios
+- Context API
+- Framer Motion
+- React Icons
+
+Backend:
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- Multer
+- pdf-parse
+- mammoth
+- bcrypt
+- dotenv
+- cors
+
+AI:
+- Integrate OpenAI API using OPENAI_API_KEY
+- Use GPT to analyze resumes
+- Keep API key inside environment variables only
+
+==========================================================
+FEATURES
+==========================================================
+
+Authentication
+- Register
+- Login
+- Logout
+- JWT Authentication
+- Protected Routes
+- Password Hashing
+- User Profile
+
+Landing Page
+- Modern Hero Section
+- Features Section
+- Testimonials
+- FAQ
+- Footer
+- Responsive Navigation
+
+Dashboard
+- Welcome Card
+- ATS Score Cards
+- Previous Resume History
+- Analysis Statistics
+- Profile Information
+- Delete Analysis
+- Search History
+
+Resume Upload
+- Drag & Drop Upload
+- Upload PDF
+- Upload DOCX
+- Progress Bar
+- File Validation
+- Upload Status
+
+Resume Analysis
+
+Extract:
+- Name
+- Email
+- Phone
+- Skills
+- Education
+- Experience
+- Projects
+- Certifications
+
+AI Analysis:
+- ATS Score (0-100)
+- Missing Keywords
+- Resume Summary
+- Weak Sections
+- Strong Sections
+- Professional Summary Improvement
+- Skill Suggestions
+- Soft Skill Suggestions
+- Technical Skill Suggestions
+- Grammar Suggestions
+- Resume Formatting Suggestions
+- Action Verb Suggestions
+- Keyword Optimization
+- Resume Strength Report
+- Job Match Score
+- Recommended Job Roles
+- Career Suggestions
+- Interview Questions
+- Salary Estimate
+- Resume Improvement Roadmap
+
+Results Page
+
+Display:
+- ATS Score
+- Circular Progress Bar
+- Skills
+- Missing Skills
+- Charts
+- AI Suggestions
+- Job Recommendations
+- Download Report
+
+Reports
+- Download PDF Report
+- Print Report
+
+Profile
+- Edit Profile
+- Change Password
+- Delete Account
+
+==========================================================
+DATABASE
+==========================================================
+
+Collections
+
+Users
+- Name
+- Email
+- Password
+- Profile
+
+Resumes
+- User
+- Resume File
+- Upload Date
+
+AnalysisReports
+- ATS Score
+- Suggestions
+- Skills
+- Missing Keywords
+- Job Roles
+- Summary
+- Resume Text
+
+==========================================================
+API
+==========================================================
+
+Create complete REST APIs
+
+Auth
+POST /register
+POST /login
+
+Resume
+POST /upload
+GET /history
+GET /analysis/:id
+DELETE /analysis/:id
+
+Profile
+GET /profile
+PUT /profile
+
+==========================================================
+UI DESIGN
+==========================================================
+
+Create a premium modern UI.
+
+Use:
+- Tailwind CSS
+- Glassmorphism
+- Gradient Backgrounds
+- Smooth Animations
+- Dark Mode
+- Light Mode
+- Cards
+- Progress Bars
+- Responsive Design
+- Mobile Friendly
+- Professional Dashboard
+
+==========================================================
+FOLDER STRUCTURE
+==========================================================
+
+client/
+
+src/
+components/
+pages/
+context/
+hooks/
+utils/
+services/
+
+server/
+
+controllers/
+models/
+routes/
+middleware/
+config/
+utils/
+
+==========================================================
+CODE QUALITY
+==========================================================
+
+Use
+
+- Clean Architecture
+- Reusable Components
+- Async Await
+- Proper Error Handling
+- Validation
+- Comments
+- Loading States
+- API Error Messages
+- Production Best Practices
+
+==========================================================
+SECURITY
+==========================================================
+
+Implement
+
+- JWT
+- Password Hashing
+- Input Validation
+- Secure API
+- Environment Variables
+- Protected Routes
+
+==========================================================
+DEPLOYMENT
+==========================================================
+
+Prepare the project for Replit Deployment.
+
+Generate:
+
+- package.json
+- package-lock.json
+- .env.example
+- .gitignore
+- README.md
+- .replit
+- replit.nix (if needed)
+
+Configure:
+
+- npm install
+- npm start
+- Production Build
+- Express serves React build
+- Environment Variables
+- CORS
+- MongoDB Connection
+- OpenAI Connection
+
+Environment Variables
+
+OPENAI_API_KEY=
+MONGODB_URI=
+JWT_SECRET=
+PORT=5000
+
+==========================================================
+BONUS FEATURES
+==========================================================
+
+Add
+
+- Dashboard Analytics
+- Resume Comparison
+- Multiple Resume Upload
+- Resume Version History
+- AI Chat Assistant
+- Job Recommendation Engine
+- Resume Keyword Heatmap
+- Resume Improvement Timeline
+- Download Analysis PDF
+- Admin Panel
+- User Analytics
+- Notification System
+- Email Verification
+- Forgot Password
+- Contact Page
+- About Page
+
+==========================================================
+FINAL REQUIREMENTS
+==========================================================
+
+The project must:
+
+- Be fully working
+- Have zero compilation errors
+- Have zero runtime errors
+- Install all dependencies automatically
+- Be production-ready
+- Be deployable on Replit with one click
+- Include complete frontend and backend code
+- Include complete MongoDB integration
+- Include complete OpenAI API integration
+- Include all required files
+- Include README with setup and deployment instructions
+
+Generate every file of the project with complete code. Do not leave placeholders or TODOs. Build the application completely from start to finish and ensure it runs successfully on Replit.
